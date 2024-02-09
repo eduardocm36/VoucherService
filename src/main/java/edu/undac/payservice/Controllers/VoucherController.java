@@ -23,7 +23,7 @@ public class VoucherController {
 
     @GetMapping("/{id}")
     public ResponseEntity getByIdVoucher(@PathVariable("id") String idVoucher) {
-        if (voucherService.findByIdVoucher(idVoucher).size() == 0) {
+        if (voucherService.findByIdVoucher(idVoucher).isEmpty()) {
             responseException.setStatus(HttpStatus.NOT_FOUND.value());
             responseException.setMessage("Valor no encontrado");
             return new ResponseEntity<>(responseException, HttpStatus.NOT_FOUND);
@@ -33,7 +33,7 @@ public class VoucherController {
 
     @GetMapping("/alumno/{id}")
     public ResponseEntity getByIdAlumno(@PathVariable("id") String id){
-        if (voucherService.findByIdAlumno(id).size() == 0) {
+        if (voucherService.findByIdAlumno(id).isEmpty()) {
             responseException.setStatus(HttpStatus.NOT_FOUND.value());
             responseException.setMessage("Valor no encontrado");
             return new ResponseEntity<>(responseException, HttpStatus.NOT_FOUND);
@@ -44,7 +44,7 @@ public class VoucherController {
     @GetMapping("/alumno/{alumno}/{concepto}")
     public ResponseEntity getByAlumnoAndConcepto(@PathVariable("alumno") String alumno,
                                                                 @PathVariable("concepto") int concepto){
-        if (voucherService.findByAlumnoAndConcepto(alumno, concepto).size() == 0) {
+        if (voucherService.findByAlumnoAndConcepto(alumno, concepto).isEmpty()) {
             responseException.setStatus(HttpStatus.NOT_FOUND.value());
             responseException.setMessage("Valor no encontrado");
             return new ResponseEntity<>(responseException, HttpStatus.NOT_FOUND);
