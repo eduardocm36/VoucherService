@@ -2,6 +2,7 @@ package edu.undac.payservice.Services;
 
 import edu.undac.payservice.Models.Files;
 import edu.undac.payservice.Models.Voucher;
+import edu.undac.payservice.Models.VoucherResponse;
 import edu.undac.payservice.Persistence.Repositories.VoucherCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,16 +20,37 @@ public class VoucherService {
     @Autowired
     private VoucherCrudRepository voucherCrudRepository;
 
-    public List<Voucher> findByIdAlumno(String idAlumno){
-        return voucherCrudRepository.findByIdAlumno(idAlumno);
+    @Autowired
+    private ConceptoService conceptoService;
+
+    @Autowired
+    private VoucherResponseMapper voucherResponseMapper;
+
+    public List<VoucherResponse> findByIdAlumno(String idAlumno){
+        List<VoucherResponse> voucherResponse = new ArrayList<>();
+        for (Voucher voucher : voucherCrudRepository.findByIdAlumno(idAlumno)) {
+            voucherResponse.add(voucherResponseMapper.toVoucherResponse(voucher,
+                    conceptoService.getByCodigo(voucher.getConceptoId())));
+        }
+        return voucherResponse;
     }
 
-    public List<Voucher> findByIdVoucher(String idVoucher){
-        return voucherCrudRepository.findByIdVoucher(idVoucher);
+    public List<VoucherResponse> findByIdVoucher(String idVoucher){
+        List<VoucherResponse> voucherResponse = new ArrayList<>();
+        for (Voucher voucher : voucherCrudRepository.findByIdVoucher(idVoucher)) {
+            voucherResponse.add(voucherResponseMapper.toVoucherResponse(voucher,
+                    conceptoService.getByCodigo(voucher.getConceptoId())));
+        }
+        return voucherResponse;
     }
 
-    public List<Voucher> findByAlumnoAndConcepto(String idAlumno, int concepto){
-        return voucherCrudRepository.findByAlumnoAndConcepto(idAlumno, concepto);
+    public List<VoucherResponse> findByAlumnoAndConcepto(String idAlumno, int concepto){
+        List<VoucherResponse> voucherResponse = new ArrayList<>();
+        for (Voucher voucher : voucherCrudRepository.findByAlumnoAndConcepto(idAlumno, concepto)) {
+            voucherResponse.add(voucherResponseMapper.toVoucherResponse(voucher,
+                    conceptoService.getByCodigo(voucher.getConceptoId())));
+        }
+        return voucherResponse;
     }
 
     public void updateVoucher(int id){
