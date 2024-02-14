@@ -3,6 +3,7 @@ package edu.undac.payservice.Services;
 import edu.undac.payservice.Models.Files;
 import edu.undac.payservice.Models.Voucher;
 import edu.undac.payservice.Models.VoucherResponse;
+import edu.undac.payservice.Persistence.Mappers.VoucherResponseMapper;
 import edu.undac.payservice.Persistence.Repositories.VoucherCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VoucherService {
