@@ -21,7 +21,7 @@ public class Voucher {
     private LocalDate fecha;
     private Integer estado;
 
-    public LocalDate dateConstructor(String date){
+    public static LocalDate dateConstructor(String date){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return LocalDate.parse(date, format);
     }

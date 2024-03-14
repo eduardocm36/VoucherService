@@ -80,7 +80,7 @@ public class VoucherService {
             String lineFile = reader.readLine();
             //Extraer fecha
             String date = lineFile.substring((lineFile.length()-10), lineFile.length());
-            voucher.setFecha(voucher.dateConstructor(date));
+            voucher.setFecha(Voucher.dateConstructor(date));
             //Extraer demas datos
             while ((lineFile = reader.readLine()) != null){
                 lineFile = lineFile.trim(); //elimina espacios iniciales
