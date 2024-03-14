@@ -1,8 +1,8 @@
 package edu.undac.payservice.Services;
 
-import edu.undac.payservice.Models.Files;
+import edu.undac.payservice.Web.Requests.FileRequest;
 import edu.undac.payservice.Models.Voucher;
-import edu.undac.payservice.Models.VoucherResponse;
+import edu.undac.payservice.Web.Responses.VoucherResponse;
 import edu.undac.payservice.Persistence.Mappers.VoucherResponseMapper;
 import edu.undac.payservice.Persistence.Repositories.VoucherCrudRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,7 @@ public class VoucherService {
         voucherCrudRepository.insertVoucher(voucher);
     }
 
-    public void insertFromFiles(Files files){
+    public void insertFromFiles(FileRequest files){
         if (files.fileOrDirectory() == null){
             mappingFile(files.getPath());
         } else {

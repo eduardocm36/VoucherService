@@ -2,7 +2,7 @@ package edu.undac.payservice.Persistence.Mappers;
 
 import edu.undac.payservice.Models.Concepto;
 import edu.undac.payservice.Models.Voucher;
-import edu.undac.payservice.Models.VoucherResponse;
+import edu.undac.payservice.Web.Responses.VoucherResponse;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +18,7 @@ public class VoucherResponseMapper {
         voucherResponse.setConcepto(concepto.getDescripcion());
         voucherResponse.setMonto(voucher.getMonto());
         voucherResponse.setEstado(voucher.getEstado());
+        voucherResponse.setIdConcepto(concepto.getCodigo());
         return voucherResponse;
     }
 

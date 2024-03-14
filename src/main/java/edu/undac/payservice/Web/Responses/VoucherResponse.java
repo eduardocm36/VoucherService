@@ -1,4 +1,4 @@
-package edu.undac.payservice.Models;
+package edu.undac.payservice.Web.Responses;
 
 
 import java.time.LocalDate;
@@ -11,6 +11,7 @@ public class VoucherResponse {
     private String nombreEstudiante;
     private String codigoVoucher;
     private String concepto;
+    private int idConcepto;
     private Double monto;
     private String fecha;
     private Integer estado;
@@ -82,5 +83,13 @@ public class VoucherResponse {
 
     public void setEstado(Integer estado) {
         this.estado = estado;
+    }
+
+    public int getIdConcepto() {
+        return idConcepto;
+    }
+
+    public void setIdConcepto(int idConcepto) {
+        this.idConcepto = idConcepto;
     }
 }

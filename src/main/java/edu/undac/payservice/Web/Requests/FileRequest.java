@@ -1,8 +1,8 @@
-package edu.undac.payservice.Models;
+package edu.undac.payservice.Web.Requests;
 
 import java.io.File;
 
-public class Files {
+public class FileRequest {
 
     private String path;
 

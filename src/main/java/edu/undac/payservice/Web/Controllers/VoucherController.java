@@ -1,16 +1,12 @@
-package edu.undac.payservice.Controllers;
+package edu.undac.payservice.Web.Controllers;
 
-import edu.undac.payservice.Models.Files;
-import edu.undac.payservice.Models.ResponseException;
-import edu.undac.payservice.Models.Voucher;
+import edu.undac.payservice.Web.Requests.FileRequest;
+import edu.undac.payservice.Web.Responses.ResponseException;
 import edu.undac.payservice.Services.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/voucher")
@@ -60,7 +56,7 @@ public class VoucherController {
 
 
     @PostMapping("/")
-    public ResponseEntity insertFromFiles(@RequestBody Files files){
+    public ResponseEntity insertFromFiles(@RequestBody FileRequest files){
         voucherService.insertFromFiles(files);
         return new ResponseEntity(HttpStatus.CREATED);
     }

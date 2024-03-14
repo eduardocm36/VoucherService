@@ -1,4 +1,4 @@
-package edu.undac.payservice.Models;
+package edu.undac.payservice.Web.Responses;
 
 
 import org.springframework.stereotype.Component;
