@@ -19,11 +19,13 @@ public class VoucherRepository implements VoucherCrudRepository {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Voucher> findByIdAlumno(String idAlumno) throws DataAccessException {
+    public Optional<List<Voucher>> findByIdAlumno(String idAlumno) throws DataAccessException {
         StringBuilder query = new StringBuilder( "SELECT id, codigo_estudiante, nombre_estudiante, " +
                 "codigo_voucher, concepto_id, monto, fecha, estado " +
                 "FROM vouchers WHERE codigo_estudiante = ?");
-        return jdbcTemplate.query(String.valueOf(query), new Object[]{idAlumno}, new VoucherMapper());
+        List<Voucher> result = jdbcTemplate.query(String.valueOf(query), new Object[]{idAlumno}, new VoucherMapper());
+        Optional<List<Voucher>> vouchers = Optional.of(result);
+        return vouchers;
     }
 
     @Override
@@ -35,11 +37,13 @@ public class VoucherRepository implements VoucherCrudRepository {
     }
 
     @Override
-    public List<Voucher> findByIdVoucher(String idVoucher) {
+    public Optional<List<Voucher>> findByIdVoucher(String idVoucher) {
         StringBuilder query = new StringBuilder( "SELECT id, codigo_estudiante, nombre_estudiante, " +
                 "codigo_voucher, concepto_id, monto, fecha, estado " +
                 "FROM vouchers WHERE codigo_voucher = ?");
-        return jdbcTemplate.query(String.valueOf(query), new Object[]{idVoucher}, new VoucherMapper());
+        Optional<List<Voucher>> vouchers = Optional.of(jdbcTemplate
+                .query(String.valueOf(query), new Object[]{idVoucher}, new VoucherMapper()));
+        return vouchers;
     }
 
     @Override

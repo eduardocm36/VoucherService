@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface VoucherCrudRepository {
 
-    List<Voucher> findByIdAlumno(String idAlumno);
+    Optional<List<Voucher>> findByIdAlumno(String idAlumno);
 
     List<Voucher> findByAlumnoAndConcepto(String idAlumno, int concepto);
 
-    List<Voucher> findByIdVoucher(String idVoucher);
+    Optional<List<Voucher>> findByIdVoucher(String idVoucher);
 
     void updateVoucher(int id);
 
