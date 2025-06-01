@@ -1,71 +1,72 @@
 package edu.undac.payservice.Services;
 
+import edu.undac.payservice.Enums.ErrorCode;
+import edu.undac.payservice.Exceptions.NotFoundException;
 import edu.undac.payservice.Models.Concepto;
 import edu.undac.payservice.Web.Requests.FileRequest;
 import edu.undac.payservice.Models.Voucher;
 import edu.undac.payservice.Web.Responses.VoucherResponse;
+import lombok.RequiredArgsConstructor;
 import edu.undac.payservice.Persistence.Mappers.VoucherResponseMapper;
 import edu.undac.payservice.Persistence.Repositories.VoucherCrudRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class VoucherService {
 
-    @Autowired
-    private VoucherCrudRepository voucherCrudRepository;
+    private final VoucherCrudRepository voucherCrudRepository;
+    private final ConceptoService conceptoService;
+    private final VoucherResponseMapper voucherResponseMapper;
+            
 
-    @Autowired
-    private ConceptoService conceptoService;
-
-    @Autowired
-    private VoucherResponseMapper voucherResponseMapper;
-
-    private BiFunction<Voucher, Concepto, VoucherResponse> convert = (voucher, concepto) ->
-            voucherResponseMapper.toVoucherResponse(voucher, concepto);
-
-    /*public List<VoucherResponse> findByIdAlumno(String idAlumno){
-        List<VoucherResponse> voucherResponse = new ArrayList<>();
-        for (Voucher voucher : voucherCrudRepository.findByIdAlumno(idAlumno)) {
-            voucherResponse.add(voucherResponseMapper.toVoucherResponse(voucher,
-                    conceptoService.getByCodigo(voucher.getConceptoId())));
-        }
-        return voucherResponse;
-    }*/
-
-    public Optional<List<VoucherResponse>> findByIdAlumno(String idAlumno){
-        List<VoucherResponse> voucherResponse = new ArrayList<>();
+    public List<VoucherResponse> findByIdAlumno(String idAlumno){
         Optional<List<Voucher>> voucherResult = voucherCrudRepository.findByIdAlumno(idAlumno);
-        Optional<List<VoucherResponse>> voucherResponseList = voucherResult.
-                map(vouchers -> vouchers.stream().map(voucher -> convert.apply(voucher,
-                        conceptoService.getByCodigo(voucher.getConceptoId()))).collect(Collectors.toList()));
+        if (voucherResult.isEmpty()) {
+            throw new NotFoundException(ErrorCode.ESTUDIANTE_NO_VOUCHER.getMessage());
+        }
+        List<VoucherResponse> voucherResponseList = voucherResult.get()
+                .stream()
+                .map(voucher -> {
+                        Concepto concepto = conceptoService.getByCodigo(voucher.getConceptoId()); 
+                        return voucherResponseMapper.toVoucherResponse(voucher, concepto);
+                    }
+                ).collect(Collectors.toList());
         return voucherResponseList;
     }
 
-    public Optional<List<VoucherResponse>> findByIdVoucher(String idVoucher){
-        List<VoucherResponse> voucherResponse = new ArrayList<>();
+    public List<VoucherResponse> findByIdVoucher(String idVoucher){
         Optional<List<Voucher>> vouchers = voucherCrudRepository.findByIdVoucher(idVoucher);
-        Optional<List<VoucherResponse>> voucherResponses = vouchers.map(vouchers1 -> vouchers1
-                .stream().map(voucher -> convert.apply(voucher,
-                        conceptoService.getByCodigo(voucher.getConceptoId()))).collect(Collectors.toList()));
+        if (vouchers.isEmpty()) {
+            throw new NotFoundException(ErrorCode.VOUCHER_NOT_FOUND.getMessage());
+        }
+        List<VoucherResponse> voucherResponses = vouchers.get()
+                .stream()
+                .map(voucher -> {
+                    Concepto concepto = conceptoService.getByCodigo(voucher.getConceptoId());
+                    return voucherResponseMapper.toVoucherResponse(voucher, concepto);
+                }).collect(Collectors.toList());
+
         return voucherResponses;
     }
 
     public List<VoucherResponse> findByAlumnoAndConcepto(String idAlumno, int concepto){
-        List<VoucherResponse> voucherResponse = new ArrayList<>();
-        for (Voucher voucher : voucherCrudRepository.findByAlumnoAndConcepto(idAlumno, concepto)) {
-            voucherResponse.add(voucherResponseMapper.toVoucherResponse(voucher,
-                    conceptoService.getByCodigo(voucher.getConceptoId())));
+        Optional<List<Voucher>> vouchers = voucherCrudRepository.findByAlumnoAndConcepto(idAlumno, concepto);
+        if (vouchers.isEmpty()) {
+            throw new NotFoundException(ErrorCode.NO_DATA.getMessage());
         }
+        List<VoucherResponse> voucherResponse = vouchers.get().stream()
+                .map(voucher -> {
+                    Concepto conceptoObj = conceptoService.getByCodigo(voucher.getConceptoId());
+                    return voucherResponseMapper.toVoucherResponse(voucher, conceptoObj);
+                }).collect(Collectors.toList());
         return voucherResponse;
     }
 

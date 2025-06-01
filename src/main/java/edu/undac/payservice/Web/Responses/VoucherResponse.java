@@ -4,6 +4,11 @@ package edu.undac.payservice.Web.Responses;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class VoucherResponse {
 
     private int id;
@@ -20,76 +25,5 @@ public class VoucherResponse {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return fecha.format(formatter);
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getCodigoEstudiante() {
-        return codigoEstudiante;
-    }
-
-    public void setCodigoEstudiante(String codigoEstudiante) {
-        this.codigoEstudiante = codigoEstudiante;
-    }
-
-    public String getNombreEstudiante() {
-        return nombreEstudiante;
-    }
-
-    public void setNombreEstudiante(String nombreEstudiante) {
-        this.nombreEstudiante = nombreEstudiante;
-    }
-
-    public String getCodigoVoucher() {
-        return codigoVoucher;
-    }
-
-    public void setCodigoVoucher(String codigoVoucher) {
-        this.codigoVoucher = codigoVoucher;
-    }
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
-    }
-
-    public Double getMonto() {
-        return monto;
-    }
-
-    public void setMonto(Double monto) {
-        this.monto = monto;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public Integer getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Integer estado) {
-        this.estado = estado;
-    }
-
-    public int getIdConcepto() {
-        return idConcepto;
-    }
-
-    public void setIdConcepto(int idConcepto) {
-        this.idConcepto = idConcepto;
-    }
+    
 }

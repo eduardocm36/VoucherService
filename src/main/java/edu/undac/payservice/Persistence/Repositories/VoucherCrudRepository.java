@@ -10,7 +10,7 @@ public interface VoucherCrudRepository {
 
     Optional<List<Voucher>> findByIdAlumno(String idAlumno);
 
-    List<Voucher> findByAlumnoAndConcepto(String idAlumno, int concepto);
+    Optional<List<Voucher>> findByAlumnoAndConcepto(String idAlumno, int concepto);
 
     Optional<List<Voucher>> findByIdVoucher(String idVoucher);
 

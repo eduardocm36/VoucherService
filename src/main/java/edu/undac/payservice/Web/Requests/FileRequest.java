@@ -2,17 +2,14 @@ package edu.undac.payservice.Web.Requests;
 
 import java.io.File;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FileRequest {
 
     private String path;
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 
     public File[] fileOrDirectory(){
         File[] files = new File(path).listFiles();
